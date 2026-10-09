@@ -1,5 +1,5 @@
 # Source: https://www.inf.usi.ch/faculty/carzaniga/edu/algo/bfs.py
-# Adapted: stdin loop -> build_graph(lines); node name = (lon, lat) tuple.
+#adapted for assignment
 
 def bfs(G, src):                # G: adjacency list, src: source node
     n = len(G)
