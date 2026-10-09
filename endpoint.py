@@ -6,11 +6,12 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-#---------------LOAD ONCE----------------------
+#---------------LOAD sirf ONCE----------------------
 
 locations = load_locations("locations.csv")
 
-info = {}
+info = {} #longitude aur lattude to info
+
 for loc_id, lon, lat, category in locations:
     info[(lon, lat)] = (loc_id, category)
 
@@ -19,7 +20,7 @@ for loc_id, lon, lat, category in locations:
 
 @app.route("/search/", methods=["POST"])
 
-def search():
+def search(): #saare vars lene
 
     lat = float(request.form["lat"])
     long = float(request.form["long"])
@@ -32,31 +33,34 @@ def search():
 
     #-------------------------SEARCH LOCATIONS------------------------------
 
-    start = nearest_point(lat, long, locations)
+    start = nearest_point(lat, long, locations) #initializing for bfs
     start_index = (start[1], start[2])
-    if start_index not in indexes:
-        return jsonify({"ids": []})
-    P, D = bfs(adj, indexes[start_index])
+
+    if start_index not in indexes: #first point
+        return str(ids)
+
+    P, D = bfs(adj, indexes[start_index]) #previous and distance
 
     found = []
 
-    for v in range(len(adj)):
+    for v in range(len(adj)): #all vertex
 
-        if D[v] is None:
+        if D[v] is None: 
             continue
 
         if name[v] not in info:
             continue
 
-        loc_id, category = info[name[v]]
-        d_lon = name[v][0] - long
-        d_lat = name[v][1] - lat
+        loc_id, category = info[name[v]] #lookupping
+        d_lon = name[v][0] -long
+        d_lat = name[v][1] -lat
 
         if ( (category == cat) and ( (d_lon*d_lon) + (d_lat*d_lat) <= (rad * rad) ) ):
             found.append((D[v], loc_id))
 
     found.sort()
-    ids = [loc_id for dist, loc_id in found[:10]]
+
+    ids = [loc_id for dist, loc_id in found[:10]] #one liner return
 
     #------------------------/SEARCH LOCATIONS------------------------------
 
