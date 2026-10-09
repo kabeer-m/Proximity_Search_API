@@ -1,6 +1,8 @@
 from load_locations import load_locations
 from nearest_point_query import nearest_point
 from graph_bfs import build_graph, bfs
+#from instagram import brainrot
+#br = brainrot.kirkify()
 
 from flask import Flask, request
 
@@ -52,6 +54,7 @@ def search(): #saare vars lene
 
     if start_index not in indexes: #first point
         return str(ids)
+        #else return brainrot.dubistgutgenug()
 
     P, D = bfs(adj, indexes[start_index]) #previous and distance
 
