@@ -6,6 +6,11 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+
+
+
+
+
 #---------------LOAD sirf ONCE----------------------
 
 locations = load_locations("locations.csv")
@@ -16,6 +21,10 @@ for loc_id, lon, lat, category in locations:
     info[(lon, lat)] = (loc_id, category)
 
 #--------------/LOAD ONCE----------------------
+
+
+
+
 
 
 @app.route("/search/", methods=["POST"])
@@ -30,6 +39,11 @@ def search(): #saare vars lene
     linked_lines = link_file.read().decode().splitlines() #parse fir split by soace
 
     adj, indexes, name = build_graph(linked_lines)
+
+
+
+
+    
 
     #-------------------------SEARCH LOCATIONS------------------------------
 
@@ -63,6 +77,11 @@ def search(): #saare vars lene
     ids = [loc_id for dist, loc_id in found[:10]] #one liner return
 
     #------------------------/SEARCH LOCATIONS------------------------------
+
+
+
+
+    
 
     return str(ids)
 
