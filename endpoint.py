@@ -2,7 +2,7 @@ from load_locations import load_locations
 from nearest_point_query import nearest_point
 from graph_bfs import build_graph, bfs
 
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -60,13 +60,7 @@ def search():
 
     #------------------------/SEARCH LOCATIONS------------------------------
 
-    return jsonify({
-
-        "lat": lat, "long": long, "cat": cat, "rad": rad,
-        "link_lines_received": len(linked_lines),
-        "ids": ids
-
-    })
+    return str(ids)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=4000)
